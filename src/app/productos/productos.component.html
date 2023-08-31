@@ -1,0 +1,44 @@
+<!-- Título de la página -->
+<h1>Productos</h1>
+
+<!-- Botón para agregar un producto -->
+<button (click)="navegarAFormulario()" mat-button color="accent" mat-raised-button>Agregar producto</button>
+
+<!-- Tabla que muestra la lista de productos -->
+<table class="mat-elevation-z13" *ngIf="productos.length > 0" mat-table [dataSource]="productos">
+
+  <!-- Columna para el nombre del producto -->
+  <ng-container matColumnDef="nombre">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.nombre }}</mat-cell>
+  </ng-container>
+
+  <!-- Columna para la descripción del producto -->
+  <ng-container matColumnDef="descripcion">
+    <mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.descripcion }}</mat-cell>
+  </ng-container>
+
+  <!-- Columna para el precio del producto -->
+  <ng-container matColumnDef="precio">
+    <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.precio | currency }}</mat-cell>
+  </ng-container>
+
+  <!-- Columna para eliminar un producto -->
+  <ng-container matColumnDef="eliminar">
+    <mat-header-cell *matHeaderCellDef>Eliminar</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button (click)="eliminar(element)" mat-icon-button color="warn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Fila de encabezado de la tabla -->
+  <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+
+  <!-- Fila de datos de la tabla -->
+  <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+
+</table>

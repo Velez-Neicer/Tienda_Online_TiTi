@@ -1,0 +1,39 @@
+<h1>Ventas</h1> <!-- Encabezado de la página -->
+
+<!-- Tabla para mostrar las ventas -->
+<table class="mat-elevation-z13" *ngIf="ventas.length > 0" mat-table [dataSource]="ventas">
+
+  <!-- Columna para mostrar el nombre del cliente -->
+  <ng-container matColumnDef="cliente">
+    <mat-header-cell *matHeaderCellDef>Cliente</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
+  </ng-container>
+
+  <!-- Columna para mostrar la dirección de envío -->
+  <ng-container matColumnDef="direccion">
+    <mat-header-cell *matHeaderCellDef>Dirección de envío</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.direccion}}</mat-cell>
+  </ng-container>
+
+  <!-- Columna para mostrar el total de la venta -->
+  <ng-container matColumnDef="total">
+    <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.total | currency}}</mat-cell>
+  </ng-container>
+
+  <!-- Columna para mostrar los detalles de la venta -->
+  <ng-container matColumnDef="detalles">
+    <mat-header-cell *matHeaderCellDef>Detalles</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="verDetalle(element.id)" color="accent">
+        <mat-icon>pageview</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Fila de encabezado de la tabla -->
+  <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+
+  <!-- Fila de datos de la tabla -->
+  <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+</table>

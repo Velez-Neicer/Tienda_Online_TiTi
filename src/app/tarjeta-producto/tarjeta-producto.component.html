@@ -1,0 +1,18 @@
+<mat-card>
+  <div >
+    <!-- Contenedor para la imagen del producto -->
+    <div class="contenedor-imagen">
+      <img src="{{ resolverRuta() }}" alt="">
+    </div>
+    <!-- Contenedor para el contenido del producto -->
+    <div style="display: inline-block; vertical-align: top">
+      <h2>{{ producto.nombre }}</h2> <!-- Mostrar el nombre del producto -->
+      <h1>{{ producto.precio | currency }}</h1> <!-- Mostrar el precio del producto con formato de moneda -->
+      <!-- Botón para ver detalles del producto -->
+      <button (click)="detalles()" mat-stroked-button color="warn" style="color:#3f51b5;">
+        Ver detalles
+        <mat-icon>arrow_right</mat-icon> <!-- Icono de flecha a la derecha -->
+      </button>
+    </div>
+  </div>
+</mat-card>

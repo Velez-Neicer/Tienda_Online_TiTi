@@ -1,0 +1,70 @@
+<!-- Contenedor principal -->
+<div class="contenedor-padre">
+  <!-- Barra de navegación -->
+  <mat-toolbar class="barra" color="warn" style="background-color: rgb(84, 84, 218); color: white;">
+    <mat-toolbar-row>
+      <!-- Botón para abrir/cerrar el menú lateral -->
+      <button (click)="cajon.toggle()" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <!-- Título de la tienda -->
+      <span>
+        Tienda Online del Tuti&nbsp;
+      </span>
+      <!-- Espacio flexible para el título -->
+      <span class="example-fill-remaining-space"></span>
+      <!-- Botón para abrir el menú del carrito de compras -->
+      <button mat-raised-button [matMenuTriggerFor]="menu">
+        <!-- Mostrar el número de productos en el carrito -->
+        <span style="margin-right: 10px" [matBadge]="productos.length+''" matBadgeOverlap="false"
+              matBadgePosition="below after">Carrito de compras</span>
+      </button>
+      <!-- Menú del carrito de compras -->
+      <mat-menu #menu="matMenu">
+        <!-- Mostrar la lista de productos en el carrito -->
+        <button mat-menu-item *ngFor="let p of productos;">{{p.nombre}}  {{p.precio | currency}}</button>
+        <!-- Mostrar el total del carrito -->
+        <button mat-menu-item>
+          <strong>Total: {{total() | currency}}</strong>
+        </button>
+        <!-- Enlace para terminar la compra -->
+        <a *ngIf="productos.length > 0" mat-menu-item routerLink="/terminar_compra">
+          <mat-icon>shopping_cart</mat-icon>
+          Terminar compra
+        </a>
+      </mat-menu>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  <!-- Contenido principal en el contenedor -->
+  <mat-sidenav-container class="contenido">
+    <!-- Menú lateral -->
+    <mat-sidenav style="min-width: 300px;" #cajon opened mode="side">
+      <mat-nav-list>
+        <!-- Sección para el administrador -->
+        <p style="margin-left: 4px;">Administrador</p>
+        <a mat-list-item routerLink="/productos">
+          <mat-icon color="primary">list_alt</mat-icon>
+          Productos
+        </a>
+        <a mat-list-item routerLink="/ventas">
+          <mat-icon color="primary">local_shipping</mat-icon>
+          Ventas
+        </a>
+        <mat-divider></mat-divider>
+        <!-- Sección para el cliente -->
+        <p style="margin-left: 4px;">Cliente</p>
+        <a mat-list-item routerLink="/tienda">
+          <mat-icon color="primary">store</mat-icon>
+          Ver tienda
+        </a>
+        <mat-divider></mat-divider>
+      </mat-nav-list>
+    </mat-sidenav>
+    
+    <!-- Contenido en el área principal -->
+    <mat-sidenav-content class="padding-10">
+      <router-outlet></router-outlet> <!-- Área donde se cargarán los componentes según la ruta -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,60 @@
+/* Estilos para imágenes */
+img {
+  max-width: 100%; /* Asegurar que las imágenes no superen su contenedor */
+}
+
+/* Estilos para imágenes con clase "imagen-izquierda" */
+img.imagen-izquierda {
+  width: 100px; /* Ancho fijo de 100px */
+  min-width: 100px; /* Ancho mínimo de 100px */
+  opacity: 0.7; /* Opacidad inicial de 0.7 */
+  display: block; /* Mostrar como bloque para controlar márgenes */
+  margin-bottom: 10px; /* Margen inferior de 10px */
+  cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  border: 5px solid #e0e0e0; /* Borde de 5px sólido con color gris claro */
+  border-radius: 5%; /* Borde redondeado */
+}
+
+/* Estilos para imágenes seleccionadas con clase "imagen-izquierda" */
+img.imagen-izquierda.seleccionada {
+  opacity: 1; /* Opacidad completa al estar seleccionada */
+}
+
+/* Estilos para el contenido a la izquierda */
+.izquierda {
+  margin-right: 15px; /* Margen derecho de 15px */
+}
+
+/* Estilos específicos para elementos dentro de mat-grid-tile con clase "detalles" */
+mat-grid-tile.detalles ::ng-deep figure {
+  align-items: start !important; /* Alinear elementos en la parte superior */
+  justify-content: start !important; /* Justificar contenido en la parte superior */
+  display: block; /* Mostrar como bloque */
+  padding: 5px; /* Espaciado interno de 5px */
+}
+
+/* Estilos para el botón con clase "carrito" */
+button.carrito {
+  position: absolute; /* Posicionamiento absoluto */
+  left: 0; /* Alineación a la izquierda */
+  bottom: 0; /* Alineación en la parte inferior */
+  margin: 0 0 15px 5px; /* Márgenes */
+}
+
+/* Estilos para el enlace con clase "comprar" */
+a.comprar {
+  position: absolute; /* Posicionamiento absoluto */
+  left: 180px; /* Alineación a la izquierda con margen */
+  bottom: 0; /* Alineación en la parte inferior */
+  margin: 0 0 15px 5px; /* Márgenes */
+}
+
+/* Estilos para encabezados de nivel 2 */
+.mat-display-2 {
+  margin: 0; /* Eliminar margen del encabezado */
+}
+
+/* Estilos para párrafos */
+p {
+  font-size: 1.3rem !important; /* Tamaño de fuente de 1.3 rem con !important para prioridad */
+}

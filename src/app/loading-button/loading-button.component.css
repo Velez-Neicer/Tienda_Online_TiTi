@@ -1,0 +1,4 @@
+/* Definición de estilo para el componente mat-spinner */
+mat-spinner {
+  margin: 2px; /* Agregamos un margen de 2 píxeles alrededor del mat-spinner */
+}

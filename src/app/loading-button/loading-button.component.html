@@ -1,0 +1,8 @@
+<!-- Un botón usando el estilo mat-flat-button de Angular Material -->
+<button mat-flat-button [disabled]="cargando" color="accent">
+  <!-- Mostrar el contenido del botón si no está cargando -->
+  <span *ngIf="!cargando">{{texto}}</span>
+  
+  <!-- Mostrar un mat-spinner si está en proceso de carga -->
+  <mat-spinner *ngIf="cargando" diameter="30"></mat-spinner>
+</button>

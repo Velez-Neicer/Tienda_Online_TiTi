@@ -1,0 +1,15 @@
+import { TestBed } from '@angular/core/testing';
+import { CarritoService } from './carrito.service';
+
+describe('CarritoService', () => { // Definir una suite de pruebas para el servicio CarritoService
+  let service: CarritoService; // Variable para acceder al servicio
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({}); // Configurar el entorno de pruebas
+    service = TestBed.inject(CarritoService); // Obtener una instancia del servicio
+  });
+
+  it('should be created', () => { // Prueba: Verificar si el servicio se crea correctamente
+    expect(service).toBeTruthy(); // Verificar si el servicio se creó correctamente
+  });
+});

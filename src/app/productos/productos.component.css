@@ -1,0 +1,5 @@
+/* Estilos para la tabla */
+table {
+  width: 100%; /* La tabla ocupa el 100% del ancho disponible */
+  margin-top: 10px; /* Agrega un margen superior de 10 píxeles */
+}

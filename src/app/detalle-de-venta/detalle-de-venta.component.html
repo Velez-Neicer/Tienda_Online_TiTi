@@ -1,0 +1,44 @@
+<!-- Tarjeta de detalles de venta -->
+<mat-card>
+  <!-- Nombre del cliente -->
+  <h2>
+    <mat-icon>person</mat-icon>
+    {{venta.nombre}}
+  </h2>
+  
+  <!-- Dirección de entrega -->
+  <h2>
+    <mat-icon>local_shipping</mat-icon>
+    {{venta.direccion}}
+  </h2>
+  
+  <!-- Total de la venta con formato de moneda -->
+  <h2>
+    <mat-icon>monetization_on</mat-icon>
+    {{venta.total | currency}}
+  </h2>
+  
+  <!-- Tabla para mostrar los productos de la venta -->
+  <table *ngIf="venta.productos.length>0" mat-table [dataSource]="venta.productos">
+    <!-- Columna para el nombre del producto -->
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.nombre}}</mat-cell>
+    </ng-container>
+    
+    <!-- Columna para el precio del producto con formato de moneda -->
+    <ng-container matColumnDef="precio">
+      <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.precio | currency}}</mat-cell>
+    </ng-container>
+    
+    <!-- Definición de las filas y encabezados de la tabla -->
+    <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+  </table>
+  
+  <br>
+  
+  <!-- Enlace para volver a la lista de ventas -->
+  <a routerLink="/ventas" mat-raised-button color="accent">Volver</a>
+</mat-card>

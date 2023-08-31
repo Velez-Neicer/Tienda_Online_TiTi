@@ -1,0 +1,9 @@
+/* Estilos para las tablas */
+table {
+  width: 100%; /* La tabla ocupa el 100% del ancho disponible */
+}
+
+/* Estilos para las imágenes */
+img {
+  max-width: 500px; /* Ancho máximo de las imágenes en 500 píxeles */
+}
