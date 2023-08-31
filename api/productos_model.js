@@ -1,125 +1,111 @@
-// Importar el módulo de conexión desde el archivo "conexion.js"
-const conexion = require("./conexion");
 
-// Importar los módulos para manejo de archivos y rutas
+const conexion = require("./conexion")
 const fs = require("fs");
 const path = require("path");
-
-// Exportar un objeto que contiene varios métodos para operaciones relacionadas con productos y fotos
 module.exports = {
-  // Método para insertar un nuevo producto en la tabla "productos"
   insertar(nombre, descripcion, precio) {
     return new Promise((resolve, reject) => {
-      conexion.query(
-        `INSERT INTO productos
-          (nombre, descripcion, precio)
-          VALUES
-          (?, ?, ?)`,
-        [nombre, descripcion, precio],
-        (err, resultados) => {
-          if (err) {
-            reject(err); // Rechazar la promesa en caso de error
-          } else {
-            resolve(resultados.insertId); // Resolver la promesa con el ID insertado
-          }
-        }
-      );
+      conexion.query(`insert into productos
+            (nombre, descripcion, precio)
+            values
+            (?, ?, ?)`,
+        [nombre, descripcion, precio], (err, resultados) => {
+          if (err) reject(err);
+          else resolve(resultados.insertId);
+        });
     });
   },
-  
-  // Método para agregar una foto a un producto en la tabla "fotos_productos"
   agregarFoto(idProducto, nombreFoto) {
     return new Promise((resolve, reject) => {
-      conexion.query(
-        `INSERT INTO fotos_productos
-          (id_producto, foto)
-          VALUES
-          (?, ?)`,
-        [idProducto, nombreFoto],
-        (err, resultados) => {
-          if (err) {
-            reject(err); // Rechazar la promesa en caso de error
-          } else {
-            resolve(resultados.insertId); // Resolver la promesa con el ID insertado
-          }
-        }
-      );
+      conexion.query(`insert into fotos_productos
+            (id_producto, foto)
+            values
+            (?, ?)`,
+        [idProducto, nombreFoto], (err, resultados) => {
+          if (err) reject(err);
+          else resolve(resultados.insertId);
+        });
     });
   },
-  
-  // Método para obtener todos los productos de la tabla "productos"
   obtener() {
     return new Promise((resolve, reject) => {
-      conexion.query(
-        `SELECT id, nombre, descripcion, precio FROM productos`,
+      conexion.query(`select id, nombre, descripcion, precio from productos`,
         (err, resultados) => {
-          if (err) {
-            reject(err); // Rechazar la promesa en caso de error
-          } else {
-            resolve(resultados); // Resolver la promesa con los resultados
-          }
-        }
-      );
+          if (err) reject(err);
+          else resolve(resultados);
+        });
     });
   },
-  
-  // Método para obtener productos con sus fotos asociadas
   obtenerConFotos() {
     return new Promise((resolve, reject) => {
-      conexion.query(
-        `SELECT * FROM productos`,
+      conexion.query(`select * from productos`,
         async (err, resultados) => {
-          if (err) {
-            reject(err); // Rechazar la promesa en caso de error
-          } else {
+          if (err) reject(err);
+          else {
             for (let x = 0; x < resultados.length; x++) {
               resultados[x].foto = await this.obtenerPrimeraFoto(resultados[x].id);
             }
-            resolve(resultados); // Resolver la promesa con los resultados y fotos
+            resolve(resultados);
           }
-        }
-      );
+        });
     });
   },
-  
-  // Método para obtener la primera foto de un producto
   obtenerPrimeraFoto(idProducto) {
     return new Promise((resolve, reject) => {
-      conexion.query(
-        `SELECT foto FROM fotos_productos WHERE id_producto = ? LIMIT 1`,
+      conexion.query(`select foto from fotos_productos WHERE id_producto = ? limit 1`,
         [idProducto],
         (err, resultados) => {
-          if (err) {
-            reject(err); // Rechazar la promesa en caso de error
-          } else {
-            resolve(resultados[0].foto); // Resolver la promesa con la foto
-          }
-        }
-      );
+          if (err) reject(err);
+          else resolve(resultados[0].foto);
+        });
     });
   },
-  
-  // ... (otros métodos para operaciones con la base de datos)
-  
-  // Método para eliminar un producto de la tabla "productos" y sus fotos asociadas
+  obtenerFotos(idProducto) {
+    return new Promise((resolve, reject) => {
+      conexion.query(`select id_producto, foto FROM fotos_productos WHERE id_producto = ?`,
+        [idProducto],
+        (err, resultados) => {
+          if (err) reject(err);
+          else resolve(resultados);
+        });
+    });
+  },
+  obtenerPorId(id) {
+    return new Promise((resolve, reject) => {
+      conexion.query(`select id, nombre,descripcion, precio from productos where id = ?`,
+        [id],
+        (err, resultados) => {
+          if (err) reject(err);
+          else resolve(resultados[0]);
+        });
+    });
+  },
+  actualizar(id, nombre, precio) {
+    return new Promise((resolve, reject) => {
+      conexion.query(`update productos
+            set nombre = ?,
+            precio = ?
+            where id = ?`,
+        [nombre, precio, id],
+        (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+    });
+  },
   eliminar(id) {
     return new Promise(async (resolve, reject) => {
       const fotos = await this.obtenerFotos(id);
       for (let m = 0; m < fotos.length; m++) {
         await fs.unlinkSync(path.join(__dirname, "fotos_productos", fotos[m].foto));
       }
-      conexion.query(
-        `DELETE FROM productos
-          WHERE id = ?`,
+      conexion.query(`delete from productos
+            where id = ?`,
         [id],
         (err) => {
-          if (err) {
-            reject(err); // Rechazar la promesa en caso de error
-          } else {
-            resolve(); // Resolver la promesa en caso de éxito
-          }
-        }
-      );
+          if (err) reject(err);
+          else resolve();
+        });
     });
   },
-};
+}
